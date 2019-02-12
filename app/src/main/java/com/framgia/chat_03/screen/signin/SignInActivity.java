@@ -1,6 +1,7 @@
 package com.framgia.chat_03.screen.signin;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -10,13 +11,13 @@ import com.framgia.chat_03.R;
 import com.framgia.chat_03.data.repository.AuthenticationRepository;
 import com.framgia.chat_03.data.source.remote.AuthenticationRemoteDataSource;
 import com.framgia.chat_03.screen.BaseActivity;
+import com.framgia.chat_03.screen.signup.SignUpActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * SignIn Screen.
  */
 public class SignInActivity extends BaseActivity implements SignInContract.View, View.OnClickListener {
-
     private EditText mEditTextUser;
     private EditText mEditTextPassWord;
     private ProgressDialog mDialogLogin;
@@ -48,6 +49,9 @@ public class SignInActivity extends BaseActivity implements SignInContract.View,
                 String username = mEditTextUser.getText().toString().trim();
                 String password = mEditTextPassWord.getText().toString().trim();
                 mPresenter.login(username, password);
+                break;
+            case R.id.text_sign_up:
+                startActivity(new Intent(this, SignUpActivity.class));
                 break;
             default:
                 break;
