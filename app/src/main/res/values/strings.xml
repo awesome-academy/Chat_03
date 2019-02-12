@@ -8,4 +8,7 @@
     <string name="login_loading">Loading...</string>
     <string name="msg_login_fail">Tài khoản hoặc mật khẩu không đúng</string>
     <string name="msg_login_account_empty">Chưa điền đầy đủ thông tin</string>
+    <string name="signup_full_name">Full name</string>
+    <string name="signup_email">Email</string>
+    <string name="signup_re_password">Confirm password</string>
 </resources>
