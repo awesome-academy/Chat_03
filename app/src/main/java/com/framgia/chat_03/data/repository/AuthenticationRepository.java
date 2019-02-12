@@ -17,4 +17,11 @@ public class AuthenticationRepository implements AuthenticationDataSource.Remote
                       OnFailureListener onFailureListener) {
         mRemote.login(username, password, onCompleteListener, onFailureListener);
     }
+
+    @Override
+    public void signUp(String fullName, String email, String password,
+                       OnCompleteListener onCompleteListener,
+                       OnFailureListener onFailureListener) {
+        mRemote.signUp(fullName, email, password, onCompleteListener, onFailureListener);
+    }
 }
