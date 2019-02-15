@@ -20,4 +20,13 @@ public class AuthenticationRemoteDataSource implements AuthenticationDataSource.
                 .addOnCompleteListener(onCompleteListener)
                 .addOnFailureListener(onFailureListener);
     }
+
+    @Override
+    public void signUp(String fullName, String email, String password,
+                       OnCompleteListener onCompleteListener,
+                       OnFailureListener onFailureListener) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(onCompleteListener)
+                .addOnFailureListener(onFailureListener);
+    }
 }

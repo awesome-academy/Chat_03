@@ -3,13 +3,18 @@ package com.framgia.chat_03.screen.signin;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.framgia.chat_03.R;
+import com.framgia.chat_03.data.model.User;
 import com.framgia.chat_03.data.repository.AuthenticationRepository;
+import com.framgia.chat_03.data.repository.UserRepository;
+import com.framgia.chat_03.data.source.local.UserLocalDataSource;
 import com.framgia.chat_03.data.source.remote.AuthenticationRemoteDataSource;
+import com.framgia.chat_03.data.source.remote.UserRemoteDataSource;
 import com.framgia.chat_03.screen.BaseActivity;
 import com.framgia.chat_03.screen.signup.SignUpActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +32,7 @@ public class SignInActivity extends BaseActivity implements SignInContract.View,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        initPresenter();
         initViews();
     }
 
@@ -84,12 +90,17 @@ public class SignInActivity extends BaseActivity implements SignInContract.View,
         Toast.makeText(this, R.string.msg_login_fail, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void fillEmailAndPassword(User user) {
+        mEditTextUser.setText(user.getEmail());
+        mEditTextPassWord.setText(user.getPassword());
+    }
+
     private void initViews() {
-        mPresenter = new SignInPresenter(new AuthenticationRepository(
-                new AuthenticationRemoteDataSource(FirebaseAuth.getInstance())));
         mPresenter.setView(this);
         mEditTextUser = findViewById(R.id.text_user_name);
         mEditTextPassWord = findViewById(R.id.text_password);
+        mPresenter.getUser();
         mDialogLogin = new ProgressDialog(this);
         initComponent();
     }
@@ -98,5 +109,15 @@ public class SignInActivity extends BaseActivity implements SignInContract.View,
         findViewById(R.id.button_sign_in).setOnClickListener(this);
         findViewById(R.id.text_sign_up).setOnClickListener(this);
     }
+
+    private void initPresenter() {
+        AuthenticationRepository authenticationRepository = new AuthenticationRepository(
+                new AuthenticationRemoteDataSource(FirebaseAuth.getInstance()));
+        UserRepository userRepository = new UserRepository(new UserLocalDataSource(PreferenceManager
+                .getDefaultSharedPreferences(this)),
+                new UserRemoteDataSource(FirebaseAuth.getInstance()));
+        mPresenter = new SignInPresenter(authenticationRepository, userRepository);
+    }
+
 
 }
