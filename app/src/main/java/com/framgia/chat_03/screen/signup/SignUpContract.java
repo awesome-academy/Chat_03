@@ -25,18 +25,20 @@ interface SignUpContract {
 
         void onWeakPassword();
 
-        void saveUser();
-
         void startHomeScreen();
 
         void setImageFromGallery(Uri data);
+
+        void chooseImageFromGallery();
+
+        User getCurrentAccount();
+
+        void onUploadImageFail();
     }
 
     interface Presenter extends BasePresenter<View> {
         void signUp(String fullName, String email,
                     String password, String confirmPassword);
-
-        void saveUser(User user);
 
         void setImageAvatar(int requestCode, int resultCode, Intent data);
     }

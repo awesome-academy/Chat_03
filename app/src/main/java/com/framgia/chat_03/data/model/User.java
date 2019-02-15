@@ -1,19 +1,46 @@
 package com.framgia.chat_03.data.model;
 
 public class User {
+    private String mUid;
     private String mEmail;
     private String mPassword;
     private String mName;
     private String mImage;
+    private long mLastSignIn;
+    private boolean mIsOnline;
 
     public User() {
     }
 
-    public User(String email, String name, String password,String image) {
+    public User(String uid, String email, String name, String password, String image) {
+        mUid = uid;
         mEmail = email;
         mName = name;
         mPassword = password;
-        mImage=image;
+        mImage = image;
+    }
+
+    public User(String email, String name, String password, String image) {
+        mEmail = email;
+        mName = name;
+        mPassword = password;
+        mImage = image;
+    }
+
+    public long getLastSignIn() {
+        return mLastSignIn;
+    }
+
+    public void setLastSignIn(long lastSignIn) {
+        mLastSignIn = lastSignIn;
+    }
+
+    public boolean isOnline() {
+        return mIsOnline;
+    }
+
+    public void setOnline(boolean online) {
+        mIsOnline = online;
     }
 
     public String getEmail() {
@@ -46,5 +73,17 @@ public class User {
 
     public void setImage(String image) {
         mImage = image;
+    }
+
+    public String getUid() {
+        return mUid;
+    }
+
+    public void setUid(String uid) {
+        mUid = uid;
+    }
+
+    public class UserKey {
+        public static final String USER_REFERENCE = "user";
     }
 }

@@ -22,6 +22,8 @@ import com.framgia.chat_03.data.source.remote.AuthenticationRemoteDataSource;
 import com.framgia.chat_03.data.source.remote.UserRemoteDataSource;
 import com.framgia.chat_03.screen.BaseActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 
 public class SignUpActivity extends BaseActivity implements SignUpContract.View, View.OnClickListener {
     public static final int PICK_IMAGE_FROM_GALLERY = 101;
@@ -117,12 +119,8 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View,
     }
 
     @Override
-    public void saveUser() {
-        String email = mEditTextEmail.getText().toString().trim();
-        String password = mEditTextPassword.getText().toString().trim();
-        String fullName = mEditTextFullName.getText().toString().trim();
-        User user = new User(email, fullName, password, null);
-        mPresenter.saveUser(user);
+    public void onUploadImageFail() {
+        Toast.makeText(this, R.string.signup_upload_image_fail, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -148,7 +146,18 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View,
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mPresenter.setImageAvatar(requestCode, resultCode, data);
+
     }
+
+    public User getCurrentAccount() {
+        String email = mEditTextEmail.getText().toString().trim();
+        String password = mEditTextPassword.getText().toString().trim();
+        String fullName = mEditTextFullName.getText().toString().trim();
+        User user = new User(FirebaseAuth.getInstance().getCurrentUser().getUid(),
+                email, fullName, password, null);
+        return user;
+    }
+
 
     private void initViews() {
         mPresenter.setView(this);
@@ -172,7 +181,10 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View,
                 new AuthenticationRemoteDataSource(FirebaseAuth.getInstance()));
         UserRepository userRepository = new UserRepository(
                 new UserLocalDataSource(PreferenceManager.getDefaultSharedPreferences(this)),
-                new UserRemoteDataSource(FirebaseAuth.getInstance()));
+                new UserRemoteDataSource(FirebaseAuth.getInstance(),
+                        FirebaseDatabase.getInstance(),
+                        FirebaseStorage.getInstance()));
         mPresenter = new SignUpPresenter(authenticationRepository, userRepository);
     }
+
 }

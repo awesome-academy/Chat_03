@@ -19,4 +19,5 @@
     <string name="signup_create_error">Tạo tài khoản không thành công</string>
     <string name="signup_weak_password">Mật khẩu phải nhiều hơn 6 ký tự</string>
     <string name="signup_permission_error">Bạn cần phải cấp quyền để sử dụng</string>
+    <string name="signup_upload_image_fail">Tải ảnh lên không thành công</string>
 </resources>

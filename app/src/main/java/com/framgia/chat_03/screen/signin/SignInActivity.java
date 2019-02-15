@@ -18,6 +18,8 @@ import com.framgia.chat_03.data.source.remote.UserRemoteDataSource;
 import com.framgia.chat_03.screen.BaseActivity;
 import com.framgia.chat_03.screen.signup.SignUpActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 
 /**
  * SignIn Screen.
@@ -115,7 +117,9 @@ public class SignInActivity extends BaseActivity implements SignInContract.View,
                 new AuthenticationRemoteDataSource(FirebaseAuth.getInstance()));
         UserRepository userRepository = new UserRepository(new UserLocalDataSource(PreferenceManager
                 .getDefaultSharedPreferences(this)),
-                new UserRemoteDataSource(FirebaseAuth.getInstance()));
+                new UserRemoteDataSource(FirebaseAuth.getInstance(),
+                        FirebaseDatabase.getInstance(),
+                        FirebaseStorage.getInstance()));
         mPresenter = new SignInPresenter(authenticationRepository, userRepository);
     }
 
