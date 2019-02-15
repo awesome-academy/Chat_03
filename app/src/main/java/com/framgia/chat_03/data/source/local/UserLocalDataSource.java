@@ -17,7 +17,7 @@ public class UserLocalDataSource implements UserDataSource.Local {
     }
 
     @Override
-    public void saveUser(User user) {
+    public void saveUserToSharePref(User user) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(KEY_EMAIL, user.getEmail());
         editor.putString(KEY_PASSWORD, user.getPassword());

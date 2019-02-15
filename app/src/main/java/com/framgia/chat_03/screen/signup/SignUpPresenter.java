@@ -1,6 +1,7 @@
 package com.framgia.chat_03.screen.signup;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -12,10 +13,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
-final class SignUpPresenter implements SignUpContract.Presenter, OnFailureListener, OnCompleteListener {
+public class SignUpPresenter implements SignUpContract.Presenter {
     private SignUpContract.View mView;
     private AuthenticationRepository mAuthenticationRepository;
     private UserRepository mUserRepository;
+    private Uri mFilepath;
 
     public SignUpPresenter(AuthenticationRepository authenticationRepository, UserRepository userRepository) {
         mAuthenticationRepository = authenticationRepository;
@@ -40,14 +42,52 @@ final class SignUpPresenter implements SignUpContract.Presenter, OnFailureListen
                        String password, String confirmPassword) {
         if (isValidateData(fullName, email, password, confirmPassword)) {
             mAuthenticationRepository.signUp(fullName, email, password,
-                    this, this);
+                    new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            checkTask(task);
+                            User user = mView.getCurrentAccount();
+                            uploadImageAndSaveAccount(user);
+                        }
+                    }, new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            mView.hideProgressDialog();
+                            if (e instanceof FirebaseAuthWeakPasswordException) {
+                                mView.onWeakPassword();
+                            }
+                        }
+                    });
             mView.showProgressDialog();
         }
     }
 
-    @Override
-    public void saveUser(User user) {
-        mUserRepository.saveUser(user);
+    private void uploadImageAndSaveAccount(final User user) {
+        mUserRepository.uploadImage(mFilepath, new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                checkTask(task);
+                mUserRepository.getUrlImage(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        checkTask(task);
+                        user.setImage(task.getResult().toString());
+                        saveUserToFirebase(user);
+                        saveUserToSharePref(user);
+
+                    }
+                });
+            }
+        }, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                mView.hideProgressDialog();
+            }
+        });
+    }
+
+    private void saveUserToSharePref(User user) {
+        mUserRepository.saveUserToSharePref(user);
     }
 
     @Override
@@ -59,29 +99,12 @@ final class SignUpPresenter implements SignUpContract.Presenter, OnFailureListen
         }
     }
 
-    @Override
-    public void onFailure(@NonNull Exception e) {
-        if (e instanceof FirebaseAuthWeakPasswordException) {
-            mView.onWeakPassword();
-        }
-    }
-
-    @Override
-    public void onComplete(@NonNull Task task) {
-        mView.hideProgressDialog();
-        if (!task.isSuccessful()) {
-            return;
-        }
-        mView.saveUser();
-        mView.startHomeScreen();
-    }
-
     private void pickImageFromGallery(Intent data) {
+        mFilepath = data.getData();
         mView.setImageFromGallery(data.getData());
     }
 
     private boolean isValidateData(String fullName, String email, String password, String confirmPassword) {
-        mView.hideProgressDialog();
         if (TextUtils.isEmpty(fullName)) {
             mView.onEmptyFullName();
             return false;
@@ -103,5 +126,25 @@ final class SignUpPresenter implements SignUpContract.Presenter, OnFailureListen
             return false;
         }
         return true;
+    }
+
+    private void saveUserToFirebase(User currentAccount) {
+        mUserRepository.saveUserToFireBase(currentAccount, new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+              
+            }
+        }, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                mView.hideProgressDialog();
+            }
+        });
+    }
+
+    private void checkTask(Task task) {
+        if (!task.isSuccessful()) {
+            return;
+        }
     }
 }
