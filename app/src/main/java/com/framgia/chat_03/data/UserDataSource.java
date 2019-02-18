@@ -7,7 +7,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 
 public interface UserDataSource {
-    interface Local{
+    interface Local {
         void saveUserToSharePref(User user);
 
         User getUser();

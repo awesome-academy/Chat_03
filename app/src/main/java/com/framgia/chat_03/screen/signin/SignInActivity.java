@@ -1,7 +1,6 @@
 package com.framgia.chat_03.screen.signin;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;

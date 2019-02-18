@@ -7,15 +7,6 @@ public class User {
     private String mName;
     private String mImage;
     private String mStatus;
-
-    public String getStatus() {
-        return mStatus;
-    }
-
-    public void setStatus(String status) {
-        mStatus = status;
-    }
-
     private long mLastSignIn;
     private boolean mIsOnline;
 
@@ -41,6 +32,14 @@ public class User {
         mName = name;
         mPassword = password;
         mImage = image;
+    }
+
+    public String getStatus() {
+        return mStatus;
+    }
+
+    public void setStatus(String status) {
+        mStatus = status;
     }
 
     public long getLastSignIn() {

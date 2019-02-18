@@ -14,6 +14,7 @@ import com.framgia.chat_03.R;
 import com.framgia.chat_03.screen.BaseActivity;
 import com.framgia.chat_03.screen.listfriend.FriendFragment;
 import com.framgia.chat_03.screen.listmessage.MessageFragment;
+import com.framgia.chat_03.screen.profile.ProfileFragment;
 import com.framgia.chat_03.utils.BottomNavigationBehavior;
 
 public class HomeActivity extends BaseActivity implements HomeContract.View,
@@ -77,7 +78,8 @@ public class HomeActivity extends BaseActivity implements HomeContract.View,
                 fragment = FriendFragment.newInstance();
                 break;
             case R.id.navigation_profile:
-                return true;
+                fragment = ProfileFragment.newInstance();
+                break;
         }
         loadFragment(fragment);
         return true;

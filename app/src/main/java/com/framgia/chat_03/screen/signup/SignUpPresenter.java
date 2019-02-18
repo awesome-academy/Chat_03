@@ -132,7 +132,7 @@ public class SignUpPresenter implements SignUpContract.Presenter {
         mUserRepository.saveUserToFireBase(currentAccount, new OnCompleteListener() {
             @Override
             public void onComplete(@NonNull Task task) {
-              
+
             }
         }, new OnFailureListener() {
             @Override
