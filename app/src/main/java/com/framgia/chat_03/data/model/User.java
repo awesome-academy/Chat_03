@@ -6,8 +6,24 @@ public class User {
     private String mPassword;
     private String mName;
     private String mImage;
+    private String mStatus;
+
+    public String getStatus() {
+        return mStatus;
+    }
+
+    public void setStatus(String status) {
+        mStatus = status;
+    }
+
     private long mLastSignIn;
     private boolean mIsOnline;
+
+    public User(String name, String image, String status) {
+        mName = name;
+        mImage = image;
+        mStatus = status;
+    }
 
     public User() {
     }

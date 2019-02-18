@@ -10,10 +10,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 
-import com.framgia.chat_03.utils.BottomNavigationBehavior;
 import com.framgia.chat_03.R;
 import com.framgia.chat_03.screen.BaseActivity;
+import com.framgia.chat_03.screen.listfriend.FriendFragment;
 import com.framgia.chat_03.screen.listmessage.MessageFragment;
+import com.framgia.chat_03.utils.BottomNavigationBehavior;
 
 public class HomeActivity extends BaseActivity implements HomeContract.View,
         BottomNavigationView.OnNavigationItemSelectedListener {
@@ -70,10 +71,12 @@ public class HomeActivity extends BaseActivity implements HomeContract.View,
         Fragment fragment;
         switch (menuItem.getItemId()) {
             case R.id.navigation_list_message:
-                fragment = new MessageFragment();
+                fragment = MessageFragment.newInstance();
                 loadFragment(fragment);
                 return true;
             case R.id.navigation_list_friend:
+                fragment = FriendFragment.newInstance();
+                loadFragment(fragment);
                 return true;
             case R.id.navigation_profile:
                 return true;

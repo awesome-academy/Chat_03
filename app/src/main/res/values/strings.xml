@@ -20,4 +20,11 @@
     <string name="signup_weak_password">Mật khẩu phải nhiều hơn 6 ký tự</string>
     <string name="signup_permission_error">Bạn cần phải cấp quyền để sử dụng</string>
     <string name="signup_upload_image_fail">Tải ảnh lên không thành công</string>
+    <string name="title_list_inbox">List message</string>
+    <string name="title_list_friend">List friend</string>
+    <string name="title_profile">Profile</string>
+    <string name="display_last_message_of_user">Display last message</string>
+    <string name="display_name_user">Display name user</string>
+    <string name="display_last_online">3h ago</string>
+    <string name="display_user_status">Display user\'s status</string>
 </resources>
