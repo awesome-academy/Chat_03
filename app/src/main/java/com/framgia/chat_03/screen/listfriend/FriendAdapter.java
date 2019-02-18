@@ -31,8 +31,8 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(mLayoutInflater.inflate(R.layout.item_list_friend, viewGroup,
-                false), mOnItemClickListener);
+        View view = mLayoutInflater.inflate(R.layout.item_list_message, viewGroup, false);
+        return new FriendAdapter.ViewHolder(view, mOnItemClickListener);
     }
 
     @Override
@@ -63,18 +63,18 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         private OnItemClickListener mOnItemClickListener;
         private User mUser;
 
-        public ViewHolder(@NonNull View itemView, OnItemClickListener onItemClickListener) {
+        ViewHolder(@NonNull View itemView, OnItemClickListener onItemClickListener) {
             super(itemView);
             mImageAvatar = itemView.findViewById(R.id.image_avatar);
             mImageUserState = itemView.findViewById(R.id.image_user_state);
             mImageChat = itemView.findViewById(R.id.image_chat);
             mImageProfile = itemView.findViewById(R.id.image_profile);
             mTextName = itemView.findViewById(R.id.text_name);
-            mTextStatus=itemView.findViewById(R.id.text_user_status);
+            mTextStatus = itemView.findViewById(R.id.text_user_status);
             mOnItemClickListener = onItemClickListener;
         }
 
-        public void bindView(Context context, User user) {
+        void bindView(Context context, User user) {
             mUser = user;
             mTextName.setText(user.getName());
             Glide.with(context)

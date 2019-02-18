@@ -31,8 +31,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(mLayoutInflater.inflate(R.layout.item_list_message, viewGroup,
-                false), mOnItemClickListener);
+        View view = mLayoutInflater.inflate(R.layout.item_list_message, viewGroup, false);
+        return new ViewHolder(view, mOnItemClickListener);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         private OnItemClickListener mOnItemClickListener;
         private Message mMessage;
 
-        public ViewHolder(@NonNull View itemView, OnItemClickListener onItemClickListener) {
+        ViewHolder(@NonNull View itemView, OnItemClickListener onItemClickListener) {
             super(itemView);
             mImageAvatar = itemView.findViewById(R.id.image_avatar);
             mImageUserState = itemView.findViewById(R.id.image_user_state);
@@ -72,7 +72,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             mOnItemClickListener = onItemClickListener;
         }
 
-        public void bindView(Context context, Message message) {
+        void bindView(Context context, Message message) {
             mMessage = message;
             mTextName.setText(message.getName());
             mTextLastMessage.setText(message.getLastMessage());

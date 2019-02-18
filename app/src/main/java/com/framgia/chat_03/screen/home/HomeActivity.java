@@ -22,7 +22,7 @@ public class HomeActivity extends BaseActivity implements HomeContract.View,
 
     public static Intent getIntent(Context context) {
         Intent intent = new Intent(context, HomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         return intent;
     }
 
@@ -68,19 +68,18 @@ public class HomeActivity extends BaseActivity implements HomeContract.View,
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        Fragment fragment;
+        Fragment fragment = null;
         switch (menuItem.getItemId()) {
             case R.id.navigation_list_message:
                 fragment = MessageFragment.newInstance();
-                loadFragment(fragment);
-                return true;
+                break;
             case R.id.navigation_list_friend:
                 fragment = FriendFragment.newInstance();
-                loadFragment(fragment);
-                return true;
+                break;
             case R.id.navigation_profile:
                 return true;
         }
-        return false;
+        loadFragment(fragment);
+        return true;
     }
 }

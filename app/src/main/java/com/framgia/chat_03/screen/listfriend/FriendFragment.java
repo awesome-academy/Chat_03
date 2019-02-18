@@ -28,7 +28,8 @@ public class FriendFragment extends BaseFragment implements FriendContract.View,
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = new FriendPresenter(this);
+        mPresenter = new FriendPresenter();
+        mPresenter.setView(this);
     }
 
     @Nullable

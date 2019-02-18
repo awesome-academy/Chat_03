@@ -1,16 +1,15 @@
 package com.framgia.chat_03.screen.listfriend;
 
 public class FriendPresenter implements FriendContract.Presenter {
+    private FriendContract.View mView;
 
-    private final FriendContract.View mView;
+    public FriendPresenter() {
 
-    public FriendPresenter(FriendContract.View view) {
-        mView = view;
     }
 
     @Override
-    public void setView(Object view) {
-
+    public void setView(FriendContract.View view) {
+        mView = view;
     }
 
     @Override

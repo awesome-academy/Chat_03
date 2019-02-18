@@ -29,7 +29,8 @@ public class MessageFragment extends BaseFragment implements MessageContract.Vie
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = new MessagePresenter(this);
+        mPresenter = new MessagePresenter();
+        mPresenter.setView(this);
     }
 
     @Nullable
