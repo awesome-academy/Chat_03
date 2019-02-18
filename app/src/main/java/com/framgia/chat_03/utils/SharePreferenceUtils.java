@@ -1,4 +1,4 @@
-package com.framgia.chat_03;
+package com.framgia.chat_03.utils;
 
 public class SharePreferenceUtils {
     public static final String KEY_EMAIL = "email";

@@ -16,6 +16,7 @@ import com.framgia.chat_03.data.source.local.UserLocalDataSource;
 import com.framgia.chat_03.data.source.remote.AuthenticationRemoteDataSource;
 import com.framgia.chat_03.data.source.remote.UserRemoteDataSource;
 import com.framgia.chat_03.screen.BaseActivity;
+import com.framgia.chat_03.screen.home.HomeActivity;
 import com.framgia.chat_03.screen.signup.SignUpActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -59,7 +60,7 @@ public class SignInActivity extends BaseActivity implements SignInContract.View,
                 mPresenter.login(username, password);
                 break;
             case R.id.text_sign_up:
-                startActivity(new Intent(this, SignUpActivity.class));
+                startActivity(SignUpActivity.getIntent(this));
                 break;
             default:
                 break;
@@ -80,6 +81,7 @@ public class SignInActivity extends BaseActivity implements SignInContract.View,
 
     @Override
     public void startHomeScreen() {
+        startActivity(HomeActivity.getIntent(this));
     }
 
     @Override
