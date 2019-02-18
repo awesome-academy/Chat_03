@@ -1,6 +1,7 @@
 package com.framgia.chat_03.screen.signup;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import com.framgia.chat_03.data.source.local.UserLocalDataSource;
 import com.framgia.chat_03.data.source.remote.AuthenticationRemoteDataSource;
 import com.framgia.chat_03.data.source.remote.UserRemoteDataSource;
 import com.framgia.chat_03.screen.BaseActivity;
+import com.framgia.chat_03.screen.home.HomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -35,6 +37,11 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View,
     private ProgressDialog mDialogLogin;
     private SignUpContract.Presenter mPresenter;
     private ImageView mImageViewAvatar;
+
+    public static Intent getIntent(Context context) {
+        Intent intent = new Intent(context, SignUpActivity.class);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

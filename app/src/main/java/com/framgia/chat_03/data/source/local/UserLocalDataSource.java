@@ -5,9 +5,9 @@ import android.content.SharedPreferences;
 import com.framgia.chat_03.data.UserDataSource;
 import com.framgia.chat_03.data.model.User;
 
-import static com.framgia.chat_03.SharePreferenceUtils.KEY_EMAIL;
-import static com.framgia.chat_03.SharePreferenceUtils.KEY_NAME;
-import static com.framgia.chat_03.SharePreferenceUtils.KEY_PASSWORD;
+import static com.framgia.chat_03.utils.SharePreferenceUtils.KEY_EMAIL;
+import static com.framgia.chat_03.utils.SharePreferenceUtils.KEY_NAME;
+import static com.framgia.chat_03.utils.SharePreferenceUtils.KEY_PASSWORD;
 
 public class UserLocalDataSource implements UserDataSource.Local {
     private SharedPreferences mSharedPreferences;
