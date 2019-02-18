@@ -1,14 +1,15 @@
 package com.framgia.chat_03.screen.listmessage;
 
 public class MessagePresenter implements MessageContract.Presenter {
-    private final MessageContract.View mView;
+    private MessageContract.View mView;
 
-    public MessagePresenter(MessageContract.View view) {
-        mView = view;
+    public MessagePresenter() {
+
     }
 
     @Override
-    public void setView(Object view) {
+    public void setView(MessageContract.View view) {
+        mView = view;
     }
 
     @Override

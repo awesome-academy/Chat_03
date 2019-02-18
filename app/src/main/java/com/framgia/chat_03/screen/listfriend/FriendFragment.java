@@ -1,4 +1,4 @@
-package com.framgia.chat_03.screen.listmessage;
+package com.framgia.chat_03.screen.listfriend;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,26 +10,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.framgia.chat_03.R;
-import com.framgia.chat_03.data.model.Message;
+import com.framgia.chat_03.data.model.User;
 import com.framgia.chat_03.screen.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessageFragment extends BaseFragment implements MessageContract.View,
-        MessageAdapter.OnItemClickListener {
-    private MessageContract.Presenter mPresenter;
-    private List<Message> mMessages;
-    private MessageAdapter mAdapter;
+public class FriendFragment extends BaseFragment implements FriendContract.View, FriendAdapter.OnItemClickListener {
+    private FriendContract.Presenter mPresenter;
+    private List<User> mUsers;
+    private FriendAdapter mAdapter;
 
-    public static MessageFragment newInstance() {
-        return new MessageFragment();
+    public static FriendFragment newInstance() {
+        return new FriendFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = new MessagePresenter();
+        mPresenter = new FriendPresenter();
         mPresenter.setView(this);
     }
 
@@ -37,7 +36,7 @@ public class MessageFragment extends BaseFragment implements MessageContract.Vie
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_list_message, container, false);
+        return inflater.inflate(R.layout.fragment_list_friend, container, false);
     }
 
     @Override
@@ -47,17 +46,17 @@ public class MessageFragment extends BaseFragment implements MessageContract.Vie
         initComponents();
     }
 
-    private void initData() {
-
-    }
-
     private void initComponents() {
-        RecyclerView recyclerView = getView().findViewById(R.id.recycler_list_message);
-        mMessages = new ArrayList<>();
-        mAdapter = new MessageAdapter(getActivity(), mMessages);
+        RecyclerView recyclerView = getView().findViewById(R.id.recycler_list_friend);
+        mUsers = new ArrayList<>();
+        mAdapter = new FriendAdapter(getActivity(), mUsers);
         mAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    private void initData() {
+
     }
 
     @Override
@@ -73,7 +72,7 @@ public class MessageFragment extends BaseFragment implements MessageContract.Vie
     }
 
     @Override
-    public void onItemClick(Message message) {
+    public void onItemClick(User user) {
 
     }
 }

@@ -10,10 +10,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 
-import com.framgia.chat_03.utils.BottomNavigationBehavior;
 import com.framgia.chat_03.R;
 import com.framgia.chat_03.screen.BaseActivity;
+import com.framgia.chat_03.screen.listfriend.FriendFragment;
 import com.framgia.chat_03.screen.listmessage.MessageFragment;
+import com.framgia.chat_03.utils.BottomNavigationBehavior;
 
 public class HomeActivity extends BaseActivity implements HomeContract.View,
         BottomNavigationView.OnNavigationItemSelectedListener {
@@ -21,7 +22,7 @@ public class HomeActivity extends BaseActivity implements HomeContract.View,
 
     public static Intent getIntent(Context context) {
         Intent intent = new Intent(context, HomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         return intent;
     }
 
@@ -67,17 +68,18 @@ public class HomeActivity extends BaseActivity implements HomeContract.View,
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        Fragment fragment;
+        Fragment fragment = null;
         switch (menuItem.getItemId()) {
             case R.id.navigation_list_message:
-                fragment = new MessageFragment();
-                loadFragment(fragment);
-                return true;
+                fragment = MessageFragment.newInstance();
+                break;
             case R.id.navigation_list_friend:
-                return true;
+                fragment = FriendFragment.newInstance();
+                break;
             case R.id.navigation_profile:
                 return true;
         }
-        return false;
+        loadFragment(fragment);
+        return true;
     }
 }

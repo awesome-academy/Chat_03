@@ -1,9 +1,9 @@
-package com.framgia.chat_03.screen.listmessage;
+package com.framgia.chat_03.screen.listfriend;
 
 import com.framgia.chat_03.screen.BasePresenter;
 import com.framgia.chat_03.screen.BaseView;
 
-interface MessageContract {
+interface FriendContract {
     interface View extends BaseView {
     }
 
