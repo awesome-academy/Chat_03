@@ -9,8 +9,8 @@ public interface AuthenticationDataSource {
                    OnCompleteListener onCompleteListener,
                    OnFailureListener onFailureListener);
 
-        void signUp(String fullName,String email, String password,
-                           OnCompleteListener onCompleteListener,
-                           OnFailureListener onFailureListener);
+        void signUp(String fullName, String email, String password,
+                    OnCompleteListener onCompleteListener,
+                    OnFailureListener onFailureListener);
     }
 }

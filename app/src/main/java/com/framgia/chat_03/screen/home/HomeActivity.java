@@ -9,10 +9,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.framgia.chat_03.R;
 import com.framgia.chat_03.screen.BaseActivity;
 import com.framgia.chat_03.screen.listfriend.FriendFragment;
@@ -81,7 +78,7 @@ public class HomeActivity extends BaseActivity implements HomeContract.View,
                 fragment = FriendFragment.newInstance();
                 break;
             case R.id.navigation_profile:
-                fragment= ProfileFragment.newInstance();
+                fragment = ProfileFragment.newInstance();
                 break;
         }
         loadFragment(fragment);
