@@ -64,7 +64,6 @@ public class SignInActivity extends BaseActivity implements SignInContract.View,
             default:
                 break;
         }
-
     }
 
     @Override
@@ -123,6 +122,4 @@ public class SignInActivity extends BaseActivity implements SignInContract.View,
                         FirebaseStorage.getInstance()));
         mPresenter = new SignInPresenter(authenticationRepository, userRepository);
     }
-
-
 }

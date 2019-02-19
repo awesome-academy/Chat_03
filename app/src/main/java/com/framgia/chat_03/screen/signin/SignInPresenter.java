@@ -23,7 +23,6 @@ final class SignInPresenter implements SignInContract.Presenter, OnCompleteListe
 
     @Override
     public void onStart() {
-
     }
 
     @Override
@@ -83,5 +82,4 @@ final class SignInPresenter implements SignInContract.Presenter, OnCompleteListe
         }
         return false;
     }
-
 }

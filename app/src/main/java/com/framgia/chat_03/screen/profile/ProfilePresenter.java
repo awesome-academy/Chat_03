@@ -4,7 +4,6 @@ final class ProfilePresenter implements ProfileContract.Presenter {
     private ProfileContract.View mView;
 
     public ProfilePresenter() {
-
     }
 
     @Override

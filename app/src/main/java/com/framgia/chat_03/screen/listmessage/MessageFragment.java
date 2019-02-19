@@ -48,7 +48,6 @@ public class MessageFragment extends BaseFragment implements MessageContract.Vie
     }
 
     private void initData() {
-
     }
 
     private void initComponents() {
@@ -74,6 +73,5 @@ public class MessageFragment extends BaseFragment implements MessageContract.Vie
 
     @Override
     public void onItemClick(Message message) {
-
     }
 }

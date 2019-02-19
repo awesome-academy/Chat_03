@@ -4,7 +4,6 @@ public class MessagePresenter implements MessageContract.Presenter {
     private MessageContract.View mView;
 
     public MessagePresenter() {
-
     }
 
     @Override
