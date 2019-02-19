@@ -9,6 +9,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.framgia.chat_03.R;
 import com.framgia.chat_03.screen.BaseActivity;
@@ -20,6 +21,7 @@ import com.framgia.chat_03.utils.BottomNavigationBehavior;
 public class HomeActivity extends BaseActivity implements HomeContract.View,
         BottomNavigationView.OnNavigationItemSelectedListener {
     private HomeContract.Presenter mPresenter;
+    private TextView mTextTitle;
 
     public static Intent getIntent(Context context) {
         Intent intent = new Intent(context, HomeActivity.class);
@@ -39,8 +41,11 @@ public class HomeActivity extends BaseActivity implements HomeContract.View,
     private void initComponents() {
         BottomNavigationView mBottomNavigationView = findViewById(R.id.bottomNavigationView);
         mBottomNavigationView.setOnNavigationItemSelectedListener(this);
-        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mBottomNavigationView.getLayoutParams();
+        CoordinatorLayout.LayoutParams layoutParams =
+                (CoordinatorLayout.LayoutParams) mBottomNavigationView.getLayoutParams();
         layoutParams.setBehavior(new BottomNavigationBehavior());
+        mTextTitle = findViewById(R.id.text_title);
+        mTextTitle.setText(getResources().getString(R.string.title_list_inbox));
     }
 
     private void initPresenter() {
@@ -62,6 +67,7 @@ public class HomeActivity extends BaseActivity implements HomeContract.View,
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.replace(R.id.frame_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -70,17 +76,22 @@ public class HomeActivity extends BaseActivity implements HomeContract.View,
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         Fragment fragment = null;
+        String title = null;
         switch (menuItem.getItemId()) {
             case R.id.navigation_list_message:
                 fragment = MessageFragment.newInstance();
+                title = getResources().getString(R.string.title_list_inbox);
                 break;
             case R.id.navigation_list_friend:
                 fragment = FriendFragment.newInstance();
+                title = getResources().getString(R.string.title_list_friend);
                 break;
             case R.id.navigation_profile:
                 fragment = ProfileFragment.newInstance();
+                title = getResources().getString(R.string.title_profile);
                 break;
         }
+        mTextTitle.setText(title);
         loadFragment(fragment);
         return true;
     }

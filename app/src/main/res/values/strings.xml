@@ -28,4 +28,6 @@
     <string name="display_last_online">3h ago</string>
     <string name="display_user_status">Display user\'s status</string>
     <string name="display_user_email">Display user\'s email</string>
+    <string name="status_default">Hi, I\'m </string>
+    <string name="signup_empty_image">Bạn chưa chọn ảnh đại diện</string>
 </resources>

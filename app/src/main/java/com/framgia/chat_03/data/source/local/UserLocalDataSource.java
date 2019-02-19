@@ -4,10 +4,9 @@ import android.content.SharedPreferences;
 
 import com.framgia.chat_03.data.UserDataSource;
 import com.framgia.chat_03.data.model.User;
+import com.google.gson.Gson;
 
-import static com.framgia.chat_03.utils.SharePreferenceUtils.KEY_EMAIL;
-import static com.framgia.chat_03.utils.SharePreferenceUtils.KEY_NAME;
-import static com.framgia.chat_03.utils.SharePreferenceUtils.KEY_PASSWORD;
+import static com.framgia.chat_03.utils.SharePreferenceUtils.KEY_USER_JSON;
 
 public class UserLocalDataSource implements UserDataSource.Local {
     private SharedPreferences mSharedPreferences;
@@ -18,21 +17,19 @@ public class UserLocalDataSource implements UserDataSource.Local {
 
     @Override
     public void saveUserToSharePref(User user) {
+        String userJson = new Gson().toJson(user);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putString(KEY_EMAIL, user.getEmail());
-        editor.putString(KEY_PASSWORD, user.getPassword());
-        editor.putString(KEY_NAME, user.getName());
+        editor.putString(KEY_USER_JSON, userJson);
         editor.apply();
     }
 
     @Override
     public User getUser() {
-        String email = mSharedPreferences.getString(KEY_EMAIL, null);
-        String pass = mSharedPreferences.getString(KEY_PASSWORD, null);
-        String name = mSharedPreferences.getString(KEY_NAME, null);
-        if (email == null && pass == null && name == null) {
+        String userJson = mSharedPreferences.getString(KEY_USER_JSON, null);
+        User user = new Gson().fromJson(userJson, User.class);
+        if (user == null) {
             return null;
         }
-        return new User(email, name, pass, null);
+        return user;
     }
 }

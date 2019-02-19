@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.framgia.chat_03.data.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.database.ValueEventListener;
 
 public interface UserDataSource {
     interface Local {
@@ -20,6 +21,8 @@ public interface UserDataSource {
         void uploadImage(Uri file, OnCompleteListener onCompleteListener,
                          OnFailureListener onFailureListener);
 
-        void getUrlImage(OnCompleteListener onCompleteListener);
+        void getImageUrl(OnCompleteListener onCompleteListener);
+
+        void getUserFromDataBase(ValueEventListener valueEventListener);
     }
 }

@@ -34,6 +34,8 @@ interface SignUpContract {
         User getCurrentAccount();
 
         void onUploadImageFail();
+
+        void onEmptyImage();
     }
 
     interface Presenter extends BasePresenter<View> {

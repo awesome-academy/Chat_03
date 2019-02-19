@@ -8,6 +8,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -28,7 +29,7 @@ public class UserRemoteDataSource implements UserDataSource.Remote {
     public void saveUserToFireBase(User user, OnCompleteListener onCompleteListener,
                                    OnFailureListener onFailureListener) {
         mDatabase.getReference(User.UserKey.USER_REFERENCE)
-                .child(user.getUid())
+                .child(mAuth.getUid())
                 .setValue(user)
                 .addOnCompleteListener(onCompleteListener)
                 .addOnFailureListener(onFailureListener);
@@ -46,8 +47,14 @@ public class UserRemoteDataSource implements UserDataSource.Remote {
     }
 
     @Override
-    public void getUrlImage(OnCompleteListener onCompleteListener) {
+    public void getImageUrl(OnCompleteListener onCompleteListener) {
         StorageReference storageReference = mStorage.getReference(mAuth.getUid());
         storageReference.getDownloadUrl().addOnCompleteListener(onCompleteListener);
+    }
+
+    @Override
+    public void getUserFromDataBase(ValueEventListener valueEventListener) {
+        mDatabase.getReference(User.UserKey.USER_REFERENCE)
+                .addValueEventListener(valueEventListener);
     }
 }

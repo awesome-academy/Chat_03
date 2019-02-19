@@ -6,6 +6,7 @@ import com.framgia.chat_03.data.UserDataSource;
 import com.framgia.chat_03.data.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.database.ValueEventListener;
 
 public class UserRepository implements UserDataSource.Local, UserDataSource.Remote {
     private UserDataSource.Local mLocal;
@@ -39,7 +40,12 @@ public class UserRepository implements UserDataSource.Local, UserDataSource.Remo
     }
 
     @Override
-    public void getUrlImage(OnCompleteListener onCompleteListener) {
-        mRemote.getUrlImage(onCompleteListener);
+    public void getImageUrl(OnCompleteListener onCompleteListener) {
+        mRemote.getImageUrl(onCompleteListener);
+    }
+
+    @Override
+    public void getUserFromDataBase(ValueEventListener valueEventListener) {
+        mRemote.getUserFromDataBase(valueEventListener);
     }
 }

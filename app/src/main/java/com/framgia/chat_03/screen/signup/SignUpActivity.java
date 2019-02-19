@@ -22,6 +22,7 @@ import com.framgia.chat_03.data.source.local.UserLocalDataSource;
 import com.framgia.chat_03.data.source.remote.AuthenticationRemoteDataSource;
 import com.framgia.chat_03.data.source.remote.UserRemoteDataSource;
 import com.framgia.chat_03.screen.BaseActivity;
+import com.framgia.chat_03.screen.home.HomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -130,8 +131,13 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View,
     }
 
     @Override
-    public void startHomeScreen() {
+    public void onEmptyImage() {
+        Toast.makeText(this, R.string.signup_empty_image, Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void startHomeScreen() {
+        startActivity(HomeActivity.getIntent(this));
     }
 
     public void chooseImageFromGallery() {
@@ -152,18 +158,21 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View,
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mPresenter.setImageAvatar(requestCode, resultCode, data);
-
     }
 
     public User getCurrentAccount() {
         String email = mEditTextEmail.getText().toString().trim();
         String password = mEditTextPassword.getText().toString().trim();
         String fullName = mEditTextFullName.getText().toString().trim();
-        User user = new User(FirebaseAuth.getInstance().getCurrentUser().getUid(),
-                email, fullName, password, null);
-        return user;
+        String image = null;
+        String status = getResources().getString(R.string.status_default) + fullName;
+        long lastOnline = System.currentTimeMillis();
+        boolean isOnline = true;
+        User.Builder builder = new User.Builder().setEmail(email).setPassword(password)
+                .setStatus(status).setImage(image).setName(fullName)
+                .setLastOnline(lastOnline).setOnline(isOnline);
+        return new User(builder);
     }
-
 
     private void initViews() {
         mPresenter.setView(this);
@@ -192,5 +201,4 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View,
                         FirebaseStorage.getInstance()));
         mPresenter = new SignUpPresenter(authenticationRepository, userRepository);
     }
-
 }

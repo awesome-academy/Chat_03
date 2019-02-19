@@ -52,7 +52,6 @@ public class SignUpPresenter implements SignUpContract.Presenter {
                     }, new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            mView.hideProgressDialog();
                             if (e instanceof FirebaseAuthWeakPasswordException) {
                                 mView.onWeakPassword();
                             }
@@ -63,11 +62,15 @@ public class SignUpPresenter implements SignUpContract.Presenter {
     }
 
     private void uploadImageAndSaveAccount(final User user) {
+        if (mFilepath == null) {
+            mView.onEmptyImage();
+            return;
+        }
         mUserRepository.uploadImage(mFilepath, new OnCompleteListener() {
             @Override
             public void onComplete(@NonNull Task task) {
                 checkTask(task);
-                mUserRepository.getUrlImage(new OnCompleteListener() {
+                mUserRepository.getImageUrl(new OnCompleteListener() {
                     @Override
                     public void onComplete(@NonNull Task task) {
                         checkTask(task);
@@ -132,7 +135,7 @@ public class SignUpPresenter implements SignUpContract.Presenter {
         mUserRepository.saveUserToFireBase(currentAccount, new OnCompleteListener() {
             @Override
             public void onComplete(@NonNull Task task) {
-
+                mView.startHomeScreen();
             }
         }, new OnFailureListener() {
             @Override
