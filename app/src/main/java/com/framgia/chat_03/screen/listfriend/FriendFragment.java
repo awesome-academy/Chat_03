@@ -1,6 +1,7 @@
 package com.framgia.chat_03.screen.listfriend;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +12,13 @@ import android.view.ViewGroup;
 
 import com.framgia.chat_03.R;
 import com.framgia.chat_03.data.model.User;
+import com.framgia.chat_03.data.repository.UserRepository;
+import com.framgia.chat_03.data.source.local.UserLocalDataSource;
+import com.framgia.chat_03.data.source.remote.UserRemoteDataSource;
 import com.framgia.chat_03.screen.BaseFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +30,6 @@ public class FriendFragment extends BaseFragment implements FriendContract.View,
 
     public static FriendFragment newInstance() {
         return new FriendFragment();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mPresenter = new FriendPresenter();
-        mPresenter.setView(this);
     }
 
     @Nullable
@@ -56,7 +56,14 @@ public class FriendFragment extends BaseFragment implements FriendContract.View,
     }
 
     private void initData() {
-
+        UserRepository userRepository = new UserRepository(
+                new UserLocalDataSource(PreferenceManager.getDefaultSharedPreferences(getActivity())),
+                new UserRemoteDataSource(FirebaseAuth.getInstance(),
+                        FirebaseDatabase.getInstance(),
+                        FirebaseStorage.getInstance()));
+        mPresenter = new FriendPresenter(userRepository);
+        mPresenter.setView(this);
+        mPresenter.getUserFromDatabase();
     }
 
     @Override
@@ -73,6 +80,10 @@ public class FriendFragment extends BaseFragment implements FriendContract.View,
 
     @Override
     public void onItemClick(User user) {
+    }
 
+    @Override
+    public void onGetUsersSuccess(List<User> users) {
+        mAdapter.addData(users);
     }
 }
