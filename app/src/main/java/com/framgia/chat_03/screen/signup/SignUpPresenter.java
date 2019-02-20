@@ -77,7 +77,6 @@ public class SignUpPresenter implements SignUpContract.Presenter {
                         user.setImage(task.getResult().toString());
                         saveUserToFirebase(user);
                         saveUserToSharePref(user);
-
                     }
                 });
             }

@@ -31,8 +31,8 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = mLayoutInflater.inflate(R.layout.item_list_message, viewGroup, false);
-        return new FriendAdapter.ViewHolder(view, mOnItemClickListener);
+        View view = mLayoutInflater.inflate(R.layout.item_list_friend, viewGroup, false);
+        return new ViewHolder(view, mOnItemClickListener);
     }
 
     @Override
@@ -47,6 +47,15 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
+    }
+
+    public void addData(List<User> users) {
+        if (users == null) {
+            return;
+        }
+        mUsers.clear();
+        mUsers.addAll(users);
+        notifyDataSetChanged();
     }
 
     public interface OnItemClickListener {
@@ -83,6 +92,11 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                     .into(mImageAvatar);
             mTextStatus.setText(user.getStatus());
             itemView.setOnClickListener(this);
+            if (user.isOnline()) {
+                mImageUserState.setImageResource(R.drawable.bg_dot_online);
+            } else {
+                mImageUserState.setImageResource(R.drawable.bg_dot_offline);
+            }
         }
 
         @Override

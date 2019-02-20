@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 public class BottomNavigationBehavior extends CoordinatorLayout.Behavior<BottomNavigationView> {
-
     public BottomNavigationBehavior() {
         super();
     }

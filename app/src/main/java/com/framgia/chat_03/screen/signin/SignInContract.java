@@ -5,7 +5,6 @@ import com.framgia.chat_03.screen.BasePresenter;
 import com.framgia.chat_03.screen.BaseView;
 
 interface SignInContract {
-
     interface View extends BaseView {
         void showProgressDiaglog();
 
