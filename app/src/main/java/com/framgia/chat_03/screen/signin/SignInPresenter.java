@@ -10,6 +10,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 final class SignInPresenter implements SignInContract.Presenter, OnCompleteListener, OnFailureListener {
     private SignInContract.View mView;
@@ -48,15 +51,14 @@ final class SignInPresenter implements SignInContract.Presenter, OnCompleteListe
     @Override
     public void getUser() {
         User user = mUserRepository.getUser();
-        if (isExitUser(user)) {
+        if (isExistUser(user)) {
             mView.fillEmailAndPassword(user);
         }
     }
 
-    public boolean isExitUser(User user) {
+    public boolean isExistUser(User user) {
         if (user == null) return false;
-        if (user.getEmail() == null && user.getPassword() == null) return false;
-        return true;
+        return user.getEmail() != null && user.getPassword() != null;
     }
 
     @Override
@@ -66,6 +68,17 @@ final class SignInPresenter implements SignInContract.Presenter, OnCompleteListe
             mView.onLoginInvalidUser();
             return;
         }
+        mUserRepository.getCurrentUserFromDataBase(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User currentUser = dataSnapshot.getValue(User.class);
+                mUserRepository.saveUserToSharePref(currentUser);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
         mView.startHomeScreen();
     }
 
@@ -77,9 +90,6 @@ final class SignInPresenter implements SignInContract.Presenter, OnCompleteListe
     }
 
     private boolean validateData(String username, String password) {
-        if (!(TextUtils.isEmpty(username) || TextUtils.isEmpty(password))) {
-            return true;
-        }
-        return false;
+        return !(TextUtils.isEmpty(username) || TextUtils.isEmpty(password));
     }
 }

@@ -48,4 +48,9 @@ public class UserRepository implements UserDataSource.Local, UserDataSource.Remo
     public void getUserFromDataBase(ValueEventListener valueEventListener) {
         mRemote.getUserFromDataBase(valueEventListener);
     }
+
+    @Override
+    public void getCurrentUserFromDataBase(ValueEventListener valueEventListener) {
+        mRemote.getCurrentUserFromDataBase(valueEventListener);
+    }
 }
