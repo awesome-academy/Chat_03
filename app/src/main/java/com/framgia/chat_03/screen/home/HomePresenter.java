@@ -1,9 +1,14 @@
 package com.framgia.chat_03.screen.home;
 
+import android.support.annotation.NonNull;
+
 import com.framgia.chat_03.data.model.User;
 import com.framgia.chat_03.data.repository.UserRepository;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
-public class HomePresenter implements HomeContract.Presenter {
+public class HomePresenter implements HomeContract.Presenter, ValueEventListener {
     private HomeContract.View mView;
     private UserRepository mUserRepository;
 
@@ -26,14 +31,23 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void loadAvatarUrl() {
-        User user = mUserRepository.getUser();
-        if (isExitUser(user)) {
-           mView.showAvatar(user.getImage());
+        mUserRepository.getCurrentUserFromDataBase(this);
+    }
+
+    private boolean isExistUserImage(User user) {
+        if (user == null) return false;
+        return user.getImage() != null;
+    }
+
+    @Override
+    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        User currentUser = dataSnapshot.getValue(User.class);
+        if (isExistUserImage(currentUser)) {
+            mView.showAvatar(currentUser.getImage());
         }
     }
 
-    public boolean isExitUser(User user) {
-        if (user == null) return false;
-        return user.getEmail() != null || user.getPassword() != null;
+    @Override
+    public void onCancelled(@NonNull DatabaseError databaseError) {
     }
 }

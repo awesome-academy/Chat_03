@@ -24,5 +24,7 @@ public interface UserDataSource {
         void getImageUrl(OnCompleteListener onCompleteListener);
 
         void getUserFromDataBase(ValueEventListener valueEventListener);
+
+        void getCurrentUserFromDataBase(ValueEventListener valueEventListener);
     }
 }

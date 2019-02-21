@@ -57,4 +57,11 @@ public class UserRemoteDataSource implements UserDataSource.Remote {
         mDatabase.getReference(User.UserKey.USER_REFERENCE)
                 .addValueEventListener(valueEventListener);
     }
+
+    @Override
+    public void getCurrentUserFromDataBase(ValueEventListener valueEventListener) {
+        mDatabase.getReference(User.UserKey.USER_REFERENCE)
+                .child(mAuth.getUid())
+                .addValueEventListener(valueEventListener);
+    }
 }
