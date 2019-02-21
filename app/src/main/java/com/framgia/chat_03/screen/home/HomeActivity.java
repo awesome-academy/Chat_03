@@ -1,6 +1,7 @@
 package com.framgia.chat_03.screen.home;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -9,7 +10,9 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,13 +26,14 @@ import com.framgia.chat_03.screen.BaseActivity;
 import com.framgia.chat_03.screen.listfriend.FriendFragment;
 import com.framgia.chat_03.screen.listmessage.MessageFragment;
 import com.framgia.chat_03.screen.profile.ProfileFragment;
+import com.framgia.chat_03.screen.signin.SignInActivity;
 import com.framgia.chat_03.utils.BottomNavigationBehavior;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 
 public class HomeActivity extends BaseActivity implements HomeContract.View,
-        BottomNavigationView.OnNavigationItemSelectedListener {
+        BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private HomeContract.Presenter mPresenter;
     private TextView mTextTitle;
     private ImageView mImageAvatar;
@@ -52,6 +56,7 @@ public class HomeActivity extends BaseActivity implements HomeContract.View,
     private void initComponents() {
         BottomNavigationView mBottomNavigationView = findViewById(R.id.bottomNavigationView);
         mBottomNavigationView.setOnNavigationItemSelectedListener(this);
+        mBottomNavigationView.setSelectedItemId(0);
         CoordinatorLayout.LayoutParams layoutParams =
                 (CoordinatorLayout.LayoutParams) mBottomNavigationView.getLayoutParams();
         layoutParams.setBehavior(new BottomNavigationBehavior());
@@ -59,6 +64,7 @@ public class HomeActivity extends BaseActivity implements HomeContract.View,
         mImageAvatar = findViewById(R.id.image_avatar);
         mTextTitle.setText(getResources().getString(R.string.title_list_inbox));
         mPresenter.loadAvatarUrl();
+        findViewById(R.id.image_logout).setOnClickListener(this);
     }
 
     private void initPresenter() {
@@ -120,5 +126,29 @@ public class HomeActivity extends BaseActivity implements HomeContract.View,
                 .load(image)
                 .apply(RequestOptions.circleCropTransform())
                 .into(mImageAvatar);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.image_logout:
+                new AlertDialog.Builder(this)
+                        .setTitle(getResources().getString(R.string.log_out_title))
+                        .setMessage(getResources().getString(R.string.log_out_mes))
+                        .setPositiveButton(getResources().getString(R.string.action_positive),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        FirebaseAuth.getInstance().signOut();
+                                        startActivity(SignInActivity.
+                                                getIntent(HomeActivity.this));
+                                        dialog.dismiss();
+                                    }
+                                })
+                        .setNegativeButton(getResources()
+                                .getString(R.string.action_negative), null)
+                        .show();
+                break;
+        }
     }
 }

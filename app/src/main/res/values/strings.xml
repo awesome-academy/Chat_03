@@ -31,4 +31,8 @@
     <string name="status_default">Hi, I\'m </string>
     <string name="signup_empty_image">Bạn chưa chọn ảnh đại diện</string>
     <string name="profile_email">Email :</string>
+    <string name="log_out_title">Đăng xuất ?</string>
+    <string name="log_out_mes">Bạn có chắc chắn muốn đăng xuất không ?</string>
+    <string name="action_positive">Có</string>
+    <string name="action_negative">Không</string>
 </resources>

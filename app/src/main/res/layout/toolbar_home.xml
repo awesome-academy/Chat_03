@@ -18,4 +18,12 @@
         android:textColor="@color/color_white"
         android:textSize="@dimen/sp_18" />
 
+    <ImageView
+        android:id="@+id/image_logout"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_gravity="end"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:src="@drawable/ic_logout" />
+
 </android.support.v7.widget.Toolbar>
