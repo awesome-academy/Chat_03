@@ -58,7 +58,7 @@ final class SignInPresenter implements SignInContract.Presenter, OnCompleteListe
 
     public boolean isExistUser(User user) {
         if (user == null) return false;
-        return user.getEmail() != null || user.getPassword() != null;
+        return user.getEmail() != null && user.getPassword() != null;
     }
 
     @Override
