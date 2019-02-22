@@ -19,8 +19,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.framgia.chat_03.R;
+import com.framgia.chat_03.data.repository.AuthenticationRepository;
 import com.framgia.chat_03.data.repository.UserRepository;
 import com.framgia.chat_03.data.source.local.UserLocalDataSource;
+import com.framgia.chat_03.data.source.remote.AuthenticationRemoteDataSource;
 import com.framgia.chat_03.data.source.remote.UserRemoteDataSource;
 import com.framgia.chat_03.screen.BaseActivity;
 import com.framgia.chat_03.screen.listfriend.FriendFragment;
@@ -68,12 +70,14 @@ public class HomeActivity extends BaseActivity implements HomeContract.View,
     }
 
     private void initPresenter() {
+        AuthenticationRepository authenticationRepository = new AuthenticationRepository(
+                new AuthenticationRemoteDataSource(FirebaseAuth.getInstance()));
         UserRepository userRepository = new UserRepository(new UserLocalDataSource(PreferenceManager
                 .getDefaultSharedPreferences(this)),
                 new UserRemoteDataSource(FirebaseAuth.getInstance(),
                         FirebaseDatabase.getInstance(),
                         FirebaseStorage.getInstance()));
-        mPresenter = new HomePresenter(userRepository);
+        mPresenter = new HomePresenter(userRepository, authenticationRepository);
         mPresenter.setView(this);
     }
 
@@ -139,7 +143,7 @@ public class HomeActivity extends BaseActivity implements HomeContract.View,
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        FirebaseAuth.getInstance().signOut();
+                                        mPresenter.signOutFirebase();
                                         startActivity(SignInActivity.
                                                 getIntent(HomeActivity.this));
                                         dialog.dismiss();

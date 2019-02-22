@@ -24,4 +24,9 @@ public class AuthenticationRepository implements AuthenticationDataSource.Remote
                        OnFailureListener onFailureListener) {
         mRemote.signUp(fullName, email, password, onCompleteListener, onFailureListener);
     }
+
+    @Override
+    public void signOut() {
+        mRemote.signOut();
+    }
 }
