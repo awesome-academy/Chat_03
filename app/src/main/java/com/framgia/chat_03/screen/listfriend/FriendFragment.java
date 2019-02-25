@@ -79,7 +79,11 @@ public class FriendFragment extends BaseFragment implements FriendContract.View,
     }
 
     @Override
-    public void onItemClick(User user) {
+    public void onImageChatClick(User user) {
+    }
+
+    @Override
+    public void onImageProfileClick(User user) {
     }
 
     @Override

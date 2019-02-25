@@ -59,7 +59,9 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     }
 
     public interface OnItemClickListener {
-        void onItemClick(User user);
+        void onImageChatClick(User user);
+
+        void onImageProfileClick(User user);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -97,12 +99,22 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             } else {
                 mImageUserState.setImageResource(R.drawable.bg_dot_offline);
             }
+            mImageChat.setOnClickListener(this);
+            mImageProfile.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            if (mOnItemClickListener != null) {
-                mOnItemClickListener.onItemClick(mUser);
+            if (mOnItemClickListener == null) {
+                return;
+            }
+            switch (v.getId()) {
+                case R.id.image_chat:
+                    mOnItemClickListener.onImageChatClick(mUser);
+                    break;
+                case R.id.image_profile:
+                    mOnItemClickListener.onImageProfileClick(mUser);
+                    break;
             }
         }
     }
