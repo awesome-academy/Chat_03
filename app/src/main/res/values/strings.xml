@@ -11,15 +11,15 @@
     <string name="signup_full_name">Full name</string>
     <string name="signup_email">Email</string>
     <string name="signup_re_password">Confirm password</string>
-    <string name="signup_empty_fullname">Bạn chưa nhập tên</string>
-    <string name="signup_empty_email">Bạn chưa nhập email</string>
-    <string name="signup_empty_password">Bạn chưa nhập mật khẩu</string>
-    <string name="signup_empty_confirm_password">Bạn chưa nhập xác nhận mật khẩu</string>
-    <string name="signup_confirm_password_error">Mật khẩu không khớp</string>
+    <string name="error_empty_fullname">Bạn chưa nhập tên</string>
+    <string name="error_empty_email">Bạn chưa nhập email</string>
+    <string name="error_empty_password">Bạn chưa nhập mật khẩu</string>
+    <string name="error_empty_confirm_password">Bạn chưa nhập xác nhận mật khẩu</string>
+    <string name="error_confirm_password">Mật khẩu không khớp</string>
     <string name="signup_create_error">Tạo tài khoản không thành công</string>
-    <string name="signup_weak_password">Mật khẩu phải nhiều hơn 6 ký tự</string>
+    <string name="error_weak_password">Mật khẩu phải nhiều hơn 6 ký tự</string>
     <string name="signup_permission_error">Bạn cần phải cấp quyền để sử dụng</string>
-    <string name="signup_upload_image_fail">Tải ảnh lên không thành công</string>
+    <string name="error_upload_image_fail">Tải ảnh lên không thành công</string>
     <string name="title_list_inbox">Message</string>
     <string name="title_list_friend">Friend</string>
     <string name="title_profile">Profile</string>
@@ -37,4 +37,6 @@
     <string name="action_negative">Không</string>
     <string name="status">Status</string>
     <string name="accept">Accept</string>
+    <string name="error_empty_status">Bạn chưa nhập status</string>
+    <string name="success_update_user">Cập nhật thông tin thành công</string>
 </resources>
