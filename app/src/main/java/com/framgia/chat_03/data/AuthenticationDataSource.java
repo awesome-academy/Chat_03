@@ -12,5 +12,7 @@ public interface AuthenticationDataSource {
         void signUp(String fullName, String email, String password,
                     OnCompleteListener onCompleteListener,
                     OnFailureListener onFailureListener);
+
+        void signOut();
     }
 }

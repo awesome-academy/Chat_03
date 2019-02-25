@@ -18,11 +18,13 @@ import com.framgia.chat_03.data.repository.UserRepository;
 import com.framgia.chat_03.data.source.local.UserLocalDataSource;
 import com.framgia.chat_03.data.source.remote.UserRemoteDataSource;
 import com.framgia.chat_03.screen.BaseFragment;
+import com.framgia.chat_03.screen.editprofile.EditProfileActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 
-public class ProfileFragment extends BaseFragment implements ProfileContract.View {
+public class ProfileFragment extends BaseFragment
+        implements ProfileContract.View, View.OnClickListener {
     private ProfileContract.Presenter mPresenter;
     private ImageView mImageBackgound;
     private ImageView mImageAvatar;
@@ -59,6 +61,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         mTextName = getView().findViewById(R.id.text_user_name);
         mTextStatus = getView().findViewById(R.id.text_status);
         mTextEmail = getView().findViewById(R.id.text_user_email);
+        getView().findViewById(R.id.image_edit).setOnClickListener(this);
     }
 
     @Override
@@ -96,5 +99,14 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         mTextName.setText(currentUser.getName());
         mTextStatus.setText(currentUser.getStatus());
         mTextEmail.setText(currentUser.getEmail());
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.image_edit:
+                startActivity(EditProfileActivity.getIntent(getContext()));
+                break;
+        }
     }
 }

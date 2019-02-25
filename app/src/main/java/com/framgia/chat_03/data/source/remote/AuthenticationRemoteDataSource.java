@@ -29,4 +29,9 @@ public class AuthenticationRemoteDataSource implements AuthenticationDataSource.
                 .addOnCompleteListener(onCompleteListener)
                 .addOnFailureListener(onFailureListener);
     }
+
+    @Override
+    public void signOut() {
+        mAuth.signOut();
+    }
 }

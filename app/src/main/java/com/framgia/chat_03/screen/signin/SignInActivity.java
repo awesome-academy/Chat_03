@@ -1,6 +1,8 @@
 package com.framgia.chat_03.screen.signin;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -29,6 +31,12 @@ public class SignInActivity extends BaseActivity implements SignInContract.View,
     private EditText mEditTextPassWord;
     private ProgressDialog mDialogLogin;
     private SignInContract.Presenter mPresenter;
+
+    public static Intent getIntent(Context context) {
+        Intent intent = new Intent(context, SignInActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
