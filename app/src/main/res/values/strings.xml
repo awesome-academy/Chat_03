@@ -35,4 +35,6 @@
     <string name="log_out_mes">Bạn có chắc chắn muốn đăng xuất không ?</string>
     <string name="action_positive">Có</string>
     <string name="action_negative">Không</string>
+    <string name="status">Status</string>
+    <string name="accept">Accept</string>
 </resources>
