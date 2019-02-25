@@ -64,4 +64,13 @@ public class UserRemoteDataSource implements UserDataSource.Remote {
                 .child(mAuth.getUid())
                 .addValueEventListener(valueEventListener);
     }
+
+    @Override
+    public void updateUserInformation(User currentUser, OnCompleteListener onCompleteListener, OnFailureListener onFailureListener) {
+        mDatabase.getReference(User.UserKey.USER_REFERENCE)
+                .child(mAuth.getUid())
+                .setValue(currentUser)
+                .addOnCompleteListener(onCompleteListener)
+                .addOnFailureListener(onFailureListener);
+    }
 }

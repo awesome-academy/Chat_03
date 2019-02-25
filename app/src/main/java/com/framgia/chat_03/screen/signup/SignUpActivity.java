@@ -97,37 +97,37 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View,
 
     @Override
     public void onEmptyFullName() {
-        Toast.makeText(this, R.string.signup_empty_fullname, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.error_empty_fullname, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onEmptyEmail() {
-        Toast.makeText(this, R.string.signup_empty_email, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.error_empty_email, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onEmptyPassWord() {
-        Toast.makeText(this, R.string.signup_empty_password, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.error_empty_password, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onEmptyConfirmPassword() {
-        Toast.makeText(this, R.string.signup_empty_confirm_password, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.error_empty_confirm_password, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onConfirmPasswordError() {
-        Toast.makeText(this, R.string.signup_confirm_password_error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.error_confirm_password, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onWeakPassword() {
-        Toast.makeText(this, R.string.signup_weak_password, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.error_weak_password, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onUploadImageFail() {
-        Toast.makeText(this, R.string.signup_upload_image_fail, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.error_upload_image_fail, Toast.LENGTH_SHORT).show();
     }
 
     @Override

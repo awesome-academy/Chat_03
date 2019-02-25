@@ -26,5 +26,8 @@ public interface UserDataSource {
         void getUserFromDataBase(ValueEventListener valueEventListener);
 
         void getCurrentUserFromDataBase(ValueEventListener valueEventListener);
+
+        void updateUserInformation(User currentUser, OnCompleteListener onCompleteListener,
+                                   OnFailureListener onFailureListener);
     }
 }
