@@ -1,23 +1,53 @@
 package com.framgia.chat_03.data.model;
 
 public class Message {
-    private String mName;
-    private String mLastMessage;
-    private String mAvatar;
-    private String mLastOnline;
+    private String mFromId;
+    private String mType;
+    private String mContent;
     private long mTimeStamp;
-    private boolean mSeen;
-    private boolean mOnline;
+    private boolean mIsSeen;
 
     public Message() {
     }
 
-    public Message(String name, String lastMessage, String avatar, String lastOnline, boolean seen) {
-        mName = name;
-        mLastMessage = lastMessage;
-        mAvatar = avatar;
-        mLastOnline = lastOnline;
-        mSeen = seen;
+    public Message(String fromId, String type, String content, long timeStamp, boolean isSeen) {
+        mFromId = fromId;
+        mType = type;
+        mContent = content;
+        mTimeStamp = timeStamp;
+        mIsSeen = isSeen;
+    }
+
+    public Message(Builder builder) {
+        mFromId = builder.mFromId;
+        mType = builder.mType;
+        mContent = builder.mContent;
+        mTimeStamp = builder.mTimeStamp;
+        mIsSeen = builder.isSeen;
+    }
+
+    public String getFromId() {
+        return mFromId;
+    }
+
+    public void setFromId(String fromId) {
+        mFromId = fromId;
+    }
+
+    public String getType() {
+        return mType;
+    }
+
+    public void setType(String type) {
+        mType = type;
+    }
+
+    public String getContent() {
+        return mContent;
+    }
+
+    public void setContent(String content) {
+        mContent = content;
     }
 
     public long getTimeStamp() {
@@ -28,51 +58,49 @@ public class Message {
         mTimeStamp = timeStamp;
     }
 
-    public boolean isOnline() {
-        return mOnline;
-    }
-
-    public void setOnline(boolean online) {
-        mOnline = online;
-    }
-
-    public String getName() {
-        return mName;
-    }
-
-    public void setName(String name) {
-        mName = name;
-    }
-
-    public String getLastMessage() {
-        return mLastMessage;
-    }
-
-    public void setLastMessage(String lastMessage) {
-        mLastMessage = lastMessage;
-    }
-
-    public String getAvatar() {
-        return mAvatar;
-    }
-
-    public void setAvatar(String avatar) {
-        mAvatar = avatar;
-    }
-
-    public String getLastOnline() {
-        return mLastOnline;
-    }
-
-    public void setLastOnline(String lastOnline) {
-        mLastOnline = lastOnline;
-    }
-
     public boolean isSeen() {
-        return mSeen;
+        return mIsSeen;
     }
 
-    public void setSeen(boolean seen) {
-        mSeen = seen;
+    public Message setSeen(boolean seen) {
+        mIsSeen = seen;
+        return this;
+    }
+
+    public static class Builder {
+        private String mFromId;
+        private String mType;
+        private String mContent;
+        private long mTimeStamp;
+        private boolean isSeen;
+
+        public Builder setFromId(String fromId) {
+            mFromId = fromId;
+            return this;
+        }
+
+        public Builder setType(String type) {
+            mType = type;
+            return this;
+        }
+
+        public Builder setContent(String content) {
+            mContent = content;
+            return this;
+        }
+
+        public Builder setTimeStamp(long timeStamp) {
+            mTimeStamp = timeStamp;
+            return this;
+        }
+
+        public Builder setSeen(boolean seen) {
+            isSeen = seen;
+            return this;
+        }
+    }
+
+    public class MessageKey {
+        public static final String MESSAGE_REFERENCE = "messages";
     }
 }
