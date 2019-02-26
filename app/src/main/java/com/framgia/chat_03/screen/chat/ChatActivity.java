@@ -75,12 +75,12 @@ public class ChatActivity extends BaseActivity implements ChatContract.View,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        initView();
         initComponent();
         initPresenter();
     }
 
-    private void initComponent() {
-        mDialog = new ProgressDialog(this);
+    private void initView() {
         mInteractUser = getIntent().getParcelableExtra(EXTRA_USER);
         mTextMessage = findViewById(R.id.text_message);
         mTextName = findViewById(R.id.text_name);
@@ -90,8 +90,12 @@ public class ChatActivity extends BaseActivity implements ChatContract.View,
         mImageAvatar = findViewById(R.id.image_avatar);
         mImageStateUser = findViewById(R.id.image_user_state);
         mRecyclerView = findViewById(R.id.recycler_message);
+    }
+
+    private void initComponent() {
+        mDialog = new ProgressDialog(this);
         mMessages = new ArrayList<>();
-        mAdapter = new ChatAdapter(this, mInteractUser, mMessages);
+        mAdapter = new ChatAdapter(this, mCurrentUser, mInteractUser, mMessages);
         mAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -99,6 +103,10 @@ public class ChatActivity extends BaseActivity implements ChatContract.View,
         mWidthLayoutCollapse = getResources().getDimensionPixelOffset(R.dimen.dp_84);
         isTextMessageZoomOut = false;
         setupAnimationTextMessage();
+        initListener();
+    }
+
+    private void initListener() {
         mImageAdd.setOnClickListener(this);
         findViewById(R.id.image_send).setOnClickListener(this);
         findViewById(R.id.image_photo).setOnClickListener(this);
@@ -238,23 +246,23 @@ public class ChatActivity extends BaseActivity implements ChatContract.View,
 
     @Override
     public void showInformationUser(User user) {
-        try {
-            mTextName.setText(user.getName());
-            Glide.with(this)
-                    .load(user.getImage())
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(mImageAvatar);
-            if (user.isOnline()) {
-                mImageStateUser.setImageResource(R.drawable.bg_dot_online);
-                mTextLastOnline.setText(getResources().getString(R.string.state_online));
-            } else {
-                mImageStateUser.setImageResource(R.drawable.bg_dot_offline);
-                CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(user.getLastOnline(),
-                        System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS);
-                mTextLastOnline.setText(timeAgo);
-            }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
+        Context context = this;
+        if (context == null) {
+            return;
+        }
+        mTextName.setText(user.getName());
+        Glide.with(getApplicationContext())
+                .load(user.getImage())
+                .apply(RequestOptions.circleCropTransform())
+                .into(mImageAvatar);
+        if (user.isOnline()) {
+            mImageStateUser.setImageResource(R.drawable.bg_dot_online);
+            mTextLastOnline.setText(getResources().getString(R.string.state_online));
+        } else {
+            mImageStateUser.setImageResource(R.drawable.bg_dot_offline);
+            CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(user.getLastOnline(),
+                    System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS);
+            mTextLastOnline.setText(timeAgo);
         }
     }
 

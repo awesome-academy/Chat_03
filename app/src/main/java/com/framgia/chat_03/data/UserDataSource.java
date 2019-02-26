@@ -37,6 +37,6 @@ public interface UserDataSource {
 
         void getUserFromDataBase(String uid, ValueEventListener valueEventListener);
 
-        void changeUserState(boolean isOnline);
+        void changeCurrentUserState(boolean isOnline);
     }
 }

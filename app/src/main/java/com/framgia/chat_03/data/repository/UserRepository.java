@@ -76,7 +76,7 @@ public class UserRepository implements UserDataSource.Local, UserDataSource.Remo
     }
 
     @Override
-    public void changeUserState(boolean isOnline) {
-        mRemote.changeUserState(isOnline);
+    public void changeCurrentUserState(boolean isOnline) {
+        mRemote.changeCurrentUserState(isOnline);
     }
 }

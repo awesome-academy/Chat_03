@@ -95,7 +95,7 @@ public class UserRemoteDataSource implements UserDataSource.Remote {
     }
 
     @Override
-    public void changeUserState(boolean isOnline) {
+    public void changeCurrentUserState(boolean isOnline) {
         mDatabase.getReference(User.UserKey.USER_REFERENCE)
                 .child(mAuth.getUid())
                 .child(User.UserKey.USER_ONLINE)

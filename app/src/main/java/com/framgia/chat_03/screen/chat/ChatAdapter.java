@@ -23,7 +23,6 @@ import com.bumptech.glide.request.target.Target;
 import com.framgia.chat_03.R;
 import com.framgia.chat_03.data.model.Message;
 import com.framgia.chat_03.data.model.User;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -39,12 +38,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     private List<Message> mMessages;
     private LayoutInflater mLayoutInflater;
     private OnItemClickListener mOnItemClickListener;
-    private User mUser;
+    private User mInteractUser;
+    private User mCurrentUser;
 
-    public ChatAdapter(Context context, User user, List<Message> messages) {
+    public ChatAdapter(Context context, User currentUser, User interactUser, List<Message> messages) {
         mContext = context;
         mMessages = messages;
-        mUser = user;
+        mInteractUser = interactUser;
+        mCurrentUser = currentUser;
         mLayoutInflater = LayoutInflater.from(context);
     }
 
@@ -71,7 +72,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.bindView(mContext, mMessages.get(i), mUser);
+        viewHolder.bindView(mContext, mMessages.get(i), mInteractUser);
     }
 
     @Override
@@ -81,19 +82,16 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (mMessages.get(position).getFromId().equals(FirebaseAuth.getInstance().getUid())) {
+        if (mMessages.get(position).getFromId().equals(mCurrentUser.getUid())) {
             if (mMessages.get(position).getType().equals(MESSAGE_TYPE_IMAGE)) {
                 return SENT_IMAGE_MESSAGE;
-            } else {
-                return SENT_TEXT_MESSAGE;
             }
-        } else {
-            if (mMessages.get(position).getType().equals(MESSAGE_TYPE_IMAGE)) {
-                return RECEIVED_IMAGE_MESSAGE;
-            } else {
-                return RECEIVED_TEXT_MESSAGE;
-            }
+            return SENT_TEXT_MESSAGE;
         }
+        if (mMessages.get(position).getType().equals(MESSAGE_TYPE_IMAGE)) {
+            return RECEIVED_IMAGE_MESSAGE;
+        }
+        return RECEIVED_TEXT_MESSAGE;
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -155,24 +153,27 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         private void showImage(Context context, String url) {
             mProgressBar.setVisibility(View.VISIBLE);
             RequestOptions requestOptions = new RequestOptions();
-            Glide.with(context).load(url).apply(requestOptions.transforms(new CenterCrop(),
-                    new RoundedCorners(ROUNDING_RADIUS))).listener(new RequestListener<Drawable>() {
-                @Override
-                public boolean onLoadFailed(@Nullable GlideException e,
-                                            Object model, Target<Drawable> target,
-                                            boolean isFirstResource) {
-                    mProgressBar.setVisibility(View.GONE);
-                    return false;
-                }
+            Glide.with(context).load(url)
+                    .apply(requestOptions.transforms(
+                            new CenterCrop(), new RoundedCorners(ROUNDING_RADIUS)))
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e,
+                                                    Object model, Target<Drawable> target,
+                                                    boolean isFirstResource) {
+                            mProgressBar.setVisibility(View.GONE);
+                            return false;
+                        }
 
-                @Override
-                public boolean onResourceReady(Drawable resource,
-                                               Object model, Target<Drawable> target,
-                                               DataSource dataSource, boolean isFirstResource) {
-                    mProgressBar.setVisibility(View.GONE);
-                    return false;
-                }
-            }).into(mImageMessage);
+                        @Override
+                        public boolean onResourceReady(Drawable resource,
+                                                       Object model, Target<Drawable> target,
+                                                       DataSource dataSource,
+                                                       boolean isFirstResource) {
+                            mProgressBar.setVisibility(View.GONE);
+                            return false;
+                        }
+                    }).into(mImageMessage);
         }
 
         @Override
