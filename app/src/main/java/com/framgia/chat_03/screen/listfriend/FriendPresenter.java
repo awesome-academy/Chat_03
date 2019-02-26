@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.framgia.chat_03.data.model.User;
 import com.framgia.chat_03.data.repository.UserRepository;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -34,7 +35,7 @@ public class FriendPresenter implements FriendContract.Presenter, ValueEventList
 
     @Override
     public void getUserFromDatabase() {
-        mRepository.getUserFromDataBase(this);
+        mRepository.getUsersFromDataBase(this);
     }
 
     @Override
@@ -42,7 +43,10 @@ public class FriendPresenter implements FriendContract.Presenter, ValueEventList
         List<User> users = new ArrayList<>();
         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
             User user = snapshot.getValue(User.class);
-            users.add(user);
+            user.setUid(snapshot.getKey());
+            if (!user.getUid().equals(FirebaseAuth.getInstance().getUid())) {
+                users.add(user);
+            }
         }
         mView.onGetUsersSuccess(users);
     }

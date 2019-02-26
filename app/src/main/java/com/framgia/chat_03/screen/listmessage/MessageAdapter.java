@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.framgia.chat_03.R;
 import com.framgia.chat_03.data.model.Message;
 
@@ -73,15 +71,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         }
 
         void bindView(Context context, Message message) {
-            mMessage = message;
-            mTextName.setText(message.getName());
-            mTextLastMessage.setText(message.getLastMessage());
-            Glide.with(context)
-                    .load(message.getAvatar())
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(mImageAvatar);
-            mTextLastOnline.setText(message.getLastOnline());
-            itemView.setOnClickListener(this);
         }
 
         @Override

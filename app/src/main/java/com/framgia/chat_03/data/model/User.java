@@ -1,6 +1,9 @@
 package com.framgia.chat_03.data.model;
 
-public class User {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class User implements Parcelable {
     private String mEmail;
     private String mName;
     private String mImage;
@@ -8,8 +11,27 @@ public class User {
     private long mLastOnline;
     private boolean mIsOnline;
     private String mPassword;
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public User() {
+    }
+
+    private String mUid;
+
+    public User(String email, String name, String password) {
+        mEmail = email;
+        mName = name;
+        mPassword = password;
     }
 
     public User(User.Builder builder) {
@@ -20,12 +42,26 @@ public class User {
         mLastOnline = builder.mLastOnline;
         mIsOnline = builder.mIsOnline;
         mPassword = builder.mPassword;
+        mUid = builder.mUid;
     }
 
-    public User(String email, String name, String password) {
-        mEmail = email;
-        mName = name;
-        mPassword = password;
+    protected User(Parcel in) {
+        mEmail = in.readString();
+        mName = in.readString();
+        mImage = in.readString();
+        mStatus = in.readString();
+        mLastOnline = in.readLong();
+        mIsOnline = in.readByte() != 0;
+        mPassword = in.readString();
+        mUid = in.readString();
+    }
+
+    public String getUid() {
+        return mUid;
+    }
+
+    public void setUid(String uid) {
+        mUid = uid;
     }
 
     public String getPassword() {
@@ -84,6 +120,23 @@ public class User {
         mImage = image;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mEmail);
+        dest.writeString(mName);
+        dest.writeString(mImage);
+        dest.writeString(mStatus);
+        dest.writeLong(mLastOnline);
+        dest.writeByte((byte) (mIsOnline ? 1 : 0));
+        dest.writeString(mPassword);
+        dest.writeString(mUid);
+    }
+
     public static class Builder {
         private String mEmail;
         private String mName;
@@ -92,6 +145,11 @@ public class User {
         private long mLastOnline;
         private boolean mIsOnline;
         private String mPassword;
+        private String mUid;
+
+        public void setUid(String uid) {
+            mUid = uid;
+        }
 
         public Builder setEmail(String email) {
             mEmail = email;
@@ -131,5 +189,6 @@ public class User {
 
     public class UserKey {
         public static final String USER_REFERENCE = "users";
+        public static final String USER_ONLINE = "online";
     }
 }

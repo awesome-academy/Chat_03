@@ -40,4 +40,5 @@
     <string name="error_empty_status">Bạn chưa nhập status</string>
     <string name="success_update_user">Cập nhật thông tin thành công</string>
     <string name="hint_edit_text_chat">Type a conversation</string>
+    <string name="state_online">Online</string>
 </resources>

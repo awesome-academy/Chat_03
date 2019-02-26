@@ -7,6 +7,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.ByteArrayOutputStream;
+
 public interface UserDataSource {
     interface Local {
         void saveUserToSharePref(User user);
@@ -21,13 +23,20 @@ public interface UserDataSource {
         void uploadImage(Uri file, OnCompleteListener onCompleteListener,
                          OnFailureListener onFailureListener);
 
+        void uploadByteImage(ByteArrayOutputStream bytes, OnCompleteListener onCompleteListener,
+                             OnFailureListener onFailureListener);
+
         void getImageUrl(OnCompleteListener onCompleteListener);
 
-        void getUserFromDataBase(ValueEventListener valueEventListener);
+        void getUsersFromDataBase(ValueEventListener valueEventListener);
 
         void getCurrentUserFromDataBase(ValueEventListener valueEventListener);
 
         void updateUserInformation(User currentUser, OnCompleteListener onCompleteListener,
                                    OnFailureListener onFailureListener);
+
+        void getUserFromDataBase(String uid, ValueEventListener valueEventListener);
+
+        void changeUserState(boolean isOnline);
     }
 }

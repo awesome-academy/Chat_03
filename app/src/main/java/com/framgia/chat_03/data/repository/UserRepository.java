@@ -8,6 +8,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.ByteArrayOutputStream;
+
 public class UserRepository implements UserDataSource.Local, UserDataSource.Remote {
     private UserDataSource.Local mLocal;
     private UserDataSource.Remote mRemote;
@@ -35,8 +37,16 @@ public class UserRepository implements UserDataSource.Local, UserDataSource.Remo
     }
 
     @Override
-    public void uploadImage(Uri file, OnCompleteListener onCompleteListener, OnFailureListener onFailureListener) {
+    public void uploadImage(Uri file, OnCompleteListener onCompleteListener,
+                            OnFailureListener onFailureListener) {
         mRemote.uploadImage(file, onCompleteListener, onFailureListener);
+    }
+
+    @Override
+    public void uploadByteImage(ByteArrayOutputStream bytes,
+                                OnCompleteListener onCompleteListener
+            , OnFailureListener onFailureListener) {
+        mRemote.uploadByteImage(bytes, onCompleteListener, onFailureListener);
     }
 
     @Override
@@ -45,8 +55,8 @@ public class UserRepository implements UserDataSource.Local, UserDataSource.Remo
     }
 
     @Override
-    public void getUserFromDataBase(ValueEventListener valueEventListener) {
-        mRemote.getUserFromDataBase(valueEventListener);
+    public void getUsersFromDataBase(ValueEventListener valueEventListener) {
+        mRemote.getUsersFromDataBase(valueEventListener);
     }
 
     @Override
@@ -58,5 +68,15 @@ public class UserRepository implements UserDataSource.Local, UserDataSource.Remo
     public void updateUserInformation(User currentUser, OnCompleteListener onCompleteListener,
                                       OnFailureListener onFailureListener) {
         mRemote.updateUserInformation(currentUser, onCompleteListener, onFailureListener);
+    }
+
+    @Override
+    public void getUserFromDataBase(String uid, ValueEventListener valueEventListener) {
+        mRemote.getUserFromDataBase(uid, valueEventListener);
+    }
+
+    @Override
+    public void changeUserState(boolean isOnline) {
+        mRemote.changeUserState(isOnline);
     }
 }

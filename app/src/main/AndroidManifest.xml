@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".screen.chat.ChatActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".screen.editprofile.EditProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
