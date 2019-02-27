@@ -12,6 +12,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
+
 public class UserRemoteDataSource implements UserDataSource.Remote {
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
@@ -47,13 +49,24 @@ public class UserRemoteDataSource implements UserDataSource.Remote {
     }
 
     @Override
+    public void uploadByteImage(ByteArrayOutputStream bytes,
+                                OnCompleteListener onCompleteListener,
+                                OnFailureListener onFailureListener) {
+        StorageReference storageReference = mStorage.getReference();
+        storageReference.child(mAuth.getUid())
+                .putBytes(bytes.toByteArray())
+                .addOnCompleteListener(onCompleteListener)
+                .addOnFailureListener(onFailureListener);
+    }
+
+    @Override
     public void getImageUrl(OnCompleteListener onCompleteListener) {
         StorageReference storageReference = mStorage.getReference(mAuth.getUid());
         storageReference.getDownloadUrl().addOnCompleteListener(onCompleteListener);
     }
 
     @Override
-    public void getUserFromDataBase(ValueEventListener valueEventListener) {
+    public void getUsersFromDataBase(ValueEventListener valueEventListener) {
         mDatabase.getReference(User.UserKey.USER_REFERENCE)
                 .addValueEventListener(valueEventListener);
     }
@@ -72,5 +85,20 @@ public class UserRemoteDataSource implements UserDataSource.Remote {
                 .setValue(currentUser)
                 .addOnCompleteListener(onCompleteListener)
                 .addOnFailureListener(onFailureListener);
+    }
+
+    @Override
+    public void getUserFromDataBase(String uid, ValueEventListener valueEventListener) {
+        mDatabase.getReference(User.UserKey.USER_REFERENCE)
+                .child(uid)
+                .addValueEventListener(valueEventListener);
+    }
+
+    @Override
+    public void changeCurrentUserState(boolean isOnline) {
+        mDatabase.getReference(User.UserKey.USER_REFERENCE)
+                .child(mAuth.getUid())
+                .child(User.UserKey.USER_ONLINE)
+                .setValue(isOnline);
     }
 }

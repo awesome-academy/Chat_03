@@ -1,5 +1,6 @@
 package com.framgia.chat_03.screen.profile;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -89,6 +90,10 @@ public class ProfileFragment extends BaseFragment
 
     @Override
     public void showCurrentUserProfile(User currentUser) {
+        Context context = getContext();
+        if (context == null) {
+            return;
+        }
         Glide.with(this)
                 .load(currentUser.getImage())
                 .apply(RequestOptions.circleCropTransform())

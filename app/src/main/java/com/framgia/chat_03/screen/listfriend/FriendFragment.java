@@ -16,6 +16,7 @@ import com.framgia.chat_03.data.repository.UserRepository;
 import com.framgia.chat_03.data.source.local.UserLocalDataSource;
 import com.framgia.chat_03.data.source.remote.UserRemoteDataSource;
 import com.framgia.chat_03.screen.BaseFragment;
+import com.framgia.chat_03.screen.chat.ChatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -80,6 +81,7 @@ public class FriendFragment extends BaseFragment implements FriendContract.View,
 
     @Override
     public void onImageChatClick(User user) {
+        startActivity(ChatActivity.getIntent(getContext(), user));
     }
 
     @Override
